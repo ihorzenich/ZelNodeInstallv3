@@ -184,8 +184,8 @@ fi
     echo "txindex=1" >> ~/.zelcash/$CONFIG_FILE
     echo "listen=1" >> ~/.zelcash/$CONFIG_FILE
     echo "logtimestamps=1" >> ~/.zelcash/$CONFIG_FILE
-    echo "externalip=$WANIP" >> ~/.zelcash/$CONFIG_FILE
-    echo "bind=$WANIP" >> ~/.zelcash/$CONFIG_FILE
+    echo "externalip=$WANIP:$PORT" >> ~/.zelcash/$CONFIG_FILE
+#    echo "bind=$WANIP" >> ~/.zelcash/$CONFIG_FILE
     echo "addnode=explorer.zel.cash" >> ~/.zelcash/$CONFIG_FILE
     echo "addnode=explorer.zel.zelcore.io" >> ~/.zelcash/$CONFIG_FILE
     echo "addnode=explorer2.zel.cash" >> ~/.zelcash/$CONFIG_FILE
@@ -315,11 +315,11 @@ echo -e "==================================================================${NC}
 echo ""
 
 echo -e "${GREEN}Configuring firewall and enabling fail2ban...${NC}"
-sudo ufw allow $SSHPORT/tcp
-sudo ufw allow $PORT/tcp
-sudo ufw logging on
-sudo ufw default deny incoming
-sudo ufw default allow outgoing
+#sudo ufw allow $SSHPORT/tcp
+sudo ufw allow $PORT/tcp comment "ZEL"
+#sudo ufw logging on
+#sudo ufw default deny incoming
+#sudo ufw default allow outgoing
 echo "y" | sudo ufw enable >/dev/null 2>&1
 sudo systemctl enable fail2ban >/dev/null 2>&1
 sudo systemctl start fail2ban >/dev/null 2>&1
