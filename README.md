@@ -38,9 +38,24 @@ or Digital Ocean: https://m.do.co/c/c9c22684c5db (link to $100 referral credit f
 2) **Connect to your VPS server console using PuTTY** terminal program, login as root and create new su user:
 
 ```
-adduser <YOURUSERNAME>
-usermod -aG sudo <YOURUSERNAME>
-reboot -n
+export LANGUAGE=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+locale-gen en_US.UTF-8
+dpkg-reconfigure locales
+apt update -y
+apt upgrade -y
+apt dist-upgrade -y
+journalctl --disk-usage
+journalctl --rotate
+journalctl --vacuum-time=1s
+sudo apt-get -y autoremove
+sudo apt-get clean
+sudo apt-get autoclean
+reboot
+
+USERNAME=zelops
+useradd -m -s /bin/bash -G adm,systemd-journal,sudo $USERNAME && passwd $USERNAME
+su zelops
 ```
 
 3) **Follow instructions to Create ZelNode Key using ZelCore Wallet**
@@ -56,7 +71,10 @@ Click ZelNode Key to copy to clipboard
 **PLEASE BE SURE YOU ARE LOGGED IN AS YOUR USERNAME BEFORE RUNNING THIS SCRIPT**
 
 ```
-wget -O zelnode.sh https://raw.githubusercontent.com/zelcash/ZelNodeInstallv3/master/zelnodev3.sh && chmod +x zelnode.sh && ./zelnode.sh
+wget https://raw.githubusercontent.com/ihorzenich/ZelNodeInstallv3/master/zelnodev3.sh
+bash ./zelnodev3.sh
+zelcash-cli znsync status
+zelcash-cli getzelnodestatus
 ```
 
 **Follow instructions to run the install script** which will install and configure your node with all necessary options.
